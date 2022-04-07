@@ -1,6 +1,6 @@
 .metronome {
   text-align: center;
-  max-width: 500px;
+  max-width: 600px;
   margin: 0 auto;
   padding: 30px;
 }
@@ -13,9 +13,15 @@
 .metronome button {
   background: #c94d46;
   padding: 10px;
-  border: 1px solid #832420;
-  border-radius: 2px;
+  border: 1px solid #581715;
+  border-radius: 5px;
   width: 100px;
   color: #fff;
   font-size: 18px;
+  cursor: pointer;
+  transition: 0.2;
+}
+
+.metronome button:hover {
+  background: #ca1010;
 }

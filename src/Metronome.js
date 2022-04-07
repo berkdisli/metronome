@@ -1,7 +1,8 @@
-import click1 from './Clicks/click1.wav';
-import click2 from './Clicks/click2.wav';
 import React, { Component } from "react";
 import './Metronome.css';
+
+import click1 from './Clicks/click1.wav';
+import click2 from './Clicks/click2.wav';
 
 class Metronome extends Component {
     constructor(props) {
@@ -17,11 +18,21 @@ class Metronome extends Component {
         this.click2 = new Audio(click2);
     }
 
-    handleSliderChange(event) {
-        this.setState({
-            bpm: event.target.value
-        })
-    }
+    playClick = () => {
+        const { count, beatsPerMeasure } = this.state;
+
+        // The first beat will have a different sound than the others
+        if (count % beatsPerMeasure === 0) {
+            this.click2.play();
+        } else {
+            this.click1.play();
+        }
+
+        // Keep track of which beat we're on
+        this.setState(state => ({
+            count: (state.count + 1) % state.beatsPerMeasure
+        }));
+    };
 
     startStop = () => {
         if (this.state.playing) {
@@ -47,21 +58,25 @@ class Metronome extends Component {
         }
     };
 
-    playClick = () => {
-        const { count, beatsPerMeasure } = this.state;
+    handleSliderChange(event) {
+        const bpm = event.target.value;
 
-        // The first beat will have a different sound than the others
-        if (count % beatsPerMeasure === 0) {
-            this.click2.play();
+        if (this.state.playing) {
+            // Stop the old timer and start a new one
+            clearInterval(this.timer);
+            this.timer = setInterval(this.playClick, (60 / bpm) * 1000);
+
+            // Set the new BPM, and reset the beat counter
+            this.setState({
+                count: 0,
+                bpm
+            });
         } else {
-            this.click1.play();
+            // Otherwise just update the BPM
+            this.setState({ bpm });
         }
-
-        // Keep track of which beat we're on
-        this.setState(state => ({
-            count: (state.count + 1) % state.beatsPerMeasure
-        }));
     };
+
     render() {
         const { playing, bpm } = this.state;
 
@@ -71,12 +86,13 @@ class Metronome extends Component {
                     <div>{bpm} BPM</div>
                     <input
                         type="range"
-                        min="60"
-                        max="240"
+                        min="35"
+                        max="250"
                         value={bpm}
                         onChange={(e) => this.handleSliderChange(e)} />
                 </div>
-                <button onClick={this.startStop}>
+                <button
+                    onClick={this.startStop}>
                     {playing ? 'Stop' : 'Start'}</button>
             </div>
         );
