@@ -6,15 +6,15 @@ A mobile friendly metronome web app built using the React.
 
 In the project directory, you can run:
 
-### `npm start`  
+#### `npm start`  
 
 or with
 
-### `yarn`
+#### `yarn`
 
 ## Build
 
-### `npm run build`
+#### `npm run build`
 
 Builds the app for production to the `build` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
@@ -26,5 +26,9 @@ Your app is ready to be deployed!
 
 To deploy the app to Github Pages:
 
-### `npm run deploy:gh-pages`
+#### `npm run deploy:gh-pages`
+
+## Web-page
+
+https://berkdisli.github.io/metronome/
 
